@@ -2,7 +2,7 @@
 
 This project calculates **real-road distances** between origin polygons (agricultural fields) and destination points (ports, grain elevators, processing plants, etc.), using GIS data and a local OSRM routing server.
 
-![](raw/ors.png)
+![](ors.png)
 
 ## 🧩 How It Works
 
