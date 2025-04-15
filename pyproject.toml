@@ -4,4 +4,12 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "contextily>=1.6.2",
+    "fiona>=1.10.1",
+    "geopandas>=1.0.1",
+    "matplotlib>=3.10.1",
+    "osmnx>=2.0.2",
+    "pandas>=2.2.3",
+    "shapely>=2.1.0",
+]
