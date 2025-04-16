@@ -1,44 +1,44 @@
 #!/bin/bash
 
-# Archivo OSM (cambiá esto por otro si querés otra región)
+# OSM file (change this if you want a different region)
 OSM_FILE="argentina-latest.osm.pbf"
 OSRM_FILE="argentina-latest.osrm"
 
-# URL para descarga (podés cambiar por otra región si querés)
+# Download URL (you can change this to another region if you want)
 DOWNLOAD_URL="https://download.geofabrik.de/south-america/$OSM_FILE"
 
-# Buscar un puerto libre a partir del 5000
-buscar_puerto_libre() {
-    puerto=5000
-    while lsof -i ":$puerto" >/dev/null 2>&1; do
-        ((puerto++))
+# Find a free port starting from 5000
+find_free_port() {
+    port=5000
+    while lsof -i ":$port" >/dev/null 2>&1; do
+        ((port++))
     done
-    echo $puerto
+    echo $port
 }
 
-# Descargar archivo si no existe
+# Download file if it doesn't exist
 if [ ! -f "$OSM_FILE" ]; then
-    echo "⏬ Descargando archivo OSM de Geofabrik..."
+    echo "⏬ Downloading OSM file from Geofabrik..."
     wget "$DOWNLOAD_URL"
 else
-    echo "✅ Archivo OSM ya descargado."
+    echo "✅ OSM file already downloaded."
 fi
 
-# Extraer datos
-echo "🔧 Extrayendo datos con perfil de automóvil..."
+# Extract data
+echo "🔧 Extracting data with car profile..."
 docker run --platform linux/amd64 -t -v $(pwd):/data osrm/osrm-backend osrm-extract -p /opt/car.lua /data/$OSM_FILE
 
-# Particionar
-echo "🔧 Generando partición de red..."
+# Partition
+echo "🔧 Generating network partition..."
 docker run --platform linux/amd64 -t -v $(pwd):/data osrm/osrm-backend osrm-partition /data/$OSRM_FILE
 
-# Customizar
-echo "🔧 Customizando red vial..."
+# Customize
+echo "🔧 Customizing road network..."
 docker run --platform linux/amd64 -t -v $(pwd):/data osrm/osrm-backend osrm-customize /data/$OSRM_FILE
 
-# Buscar puerto disponible
-PUERTO=$(buscar_puerto_libre)
-echo "🚀 Iniciando OSRM en el puerto $PUERTO..."
+# Find available port
+PORT=$(find_free_port)
+echo "🚀 Starting OSRM on port $PORT..."
 
-# Ejecutar OSRM
-docker run --platform linux/amd64 -t -i -p $PUERTO:5000 -v $(pwd):/data osrm/osrm-backend osrm-routed --algorithm mld /data/$OSRM_FILE
+# Run OSRM
+docker run --platform linux/amd64 -t -i -p $PORT:5000 -v $(pwd):/data osrm/osrm-backend osrm-routed --algorithm mld /data/$OSRM_FILE
