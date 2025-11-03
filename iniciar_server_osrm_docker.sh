@@ -26,19 +26,33 @@ fi
 
 # Extract data
 echo "🔧 Extracting data with car profile..."
-docker run --platform linux/amd64 -t -v $(pwd):/data osrm/osrm-backend osrm-extract -p /opt/car.lua /data/$OSM_FILE
+docker run --platform linux/amd64 -t -v "$(pwd)":/data osrm/osrm-backend osrm-extract -p /opt/car.lua /data/$OSM_FILE
 
 # Partition
 echo "🔧 Generating network partition..."
-docker run --platform linux/amd64 -t -v $(pwd):/data osrm/osrm-backend osrm-partition /data/$OSRM_FILE
+docker run --platform linux/amd64 -t -v "$(pwd)":/data osrm/osrm-backend osrm-partition /data/$OSRM_FILE
 
 # Customize
 echo "🔧 Customizing road network..."
-docker run --platform linux/amd64 -t -v $(pwd):/data osrm/osrm-backend osrm-customize /data/$OSRM_FILE
+docker run --platform linux/amd64 -t -v "$(pwd)":/data osrm/osrm-backend osrm-customize /data/$OSRM_FILE
 
 # Find available port
 PORT=$(find_free_port)
 echo "🚀 Starting OSRM on port $PORT..."
 
-# Run OSRM
-docker run --platform linux/amd64 -t -i -p $PORT:5000 -v $(pwd):/data osrm/osrm-backend osrm-routed --algorithm mld /data/$OSRM_FILE
+# Stop and remove existing container if it exists
+if [ "$(docker ps -aq -f name=osrm)" ]; then
+    echo "🧹 Removing existing OSRM container..."
+    docker stop osrm >/dev/null 2>&1
+    docker rm osrm >/dev/null 2>&1
+fi
+
+# Run OSRM in detached mode with fixed container name
+docker run --platform linux/amd64 -d \
+    --name osrm \
+    -p $PORT:5000 \
+    -v "$(pwd)":/data \
+    osrm/osrm-backend osrm-routed --algorithm mld /data/$OSRM_FILE
+
+echo "✅ OSRM server is now running in background (container: osrm)"
+echo "🌍 Access it at: http://localhost:$PORT"
