@@ -16,7 +16,7 @@ This project calculates **real-road distances and travel times** between origin 
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone Joaquin-Urruti/osrm-local-server
 cd distancias_destinos_localserver
 ```
 
