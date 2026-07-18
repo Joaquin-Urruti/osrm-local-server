@@ -57,7 +57,7 @@ dist/
 # ==============================
 # Salidas de render (Quarto / HTML generado)
 # ==============================
-README_files/
+README_files/libs/
 README.html
 
 # ==============================
