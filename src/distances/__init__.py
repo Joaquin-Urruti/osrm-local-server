@@ -8,13 +8,14 @@ from distances.inputs import (
     to_point_layer,
 )
 from distances.matrix import build_distance_matrix
-from distances.osrm import get_driving_distance, snap_to_road
+from distances.osrm import get_driving_distance, get_driving_route, snap_to_road
 from distances.settings import PROJECT_ROOT, load_settings
 
 __all__ = [
     "PROJECT_ROOT",
     "build_distance_matrix",
     "get_driving_distance",
+    "get_driving_route",
     "load_destination",
     "load_destination_layers",
     "load_destinations",
