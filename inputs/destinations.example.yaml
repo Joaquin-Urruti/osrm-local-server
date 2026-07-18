@@ -1,0 +1,18 @@
+# Copy to destinations.yaml in this same folder and edit.
+# Final ID: {type}_{name}, e.g. puerto_Bahia Blanca
+
+destinations:
+  - path: destinos.gpkg
+    layer: molinos
+    type: molino
+    name_col: Localidad
+
+  - path: destinos.gpkg
+    layer: puertos
+    type: puerto
+    name_col: Localidad
+
+  # - path: destinos.gpkg
+  #   layer: laboratorios
+  #   type: laboratorio
+  #   name_col: Localidad

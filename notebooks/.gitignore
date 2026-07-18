@@ -1,0 +1,4 @@
+# Keep folder in repo; ignore everything except the example notebook
+*
+!.gitignore
+!example.ipynb

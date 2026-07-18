@@ -1,0 +1,4 @@
+destinations:
+  - path: test_destinations.geojson
+    type: puerto
+    name_col: nam

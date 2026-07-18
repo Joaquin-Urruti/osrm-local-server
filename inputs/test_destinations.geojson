@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "test_destinations",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "gid": 56, "entidad": 0.0, "objeto": "Puerto", "fna": "Puerto Mar del Plata", "gna": "Puerto", "nam": "Mar del Plata", "fuc": 2.0, "fdc": "IGN/Min. de Transporte", "sag": "IGN" }, "geometry": { "type": "Point", "coordinates": [ -57.53598367, -38.04585168 ] } },
+{ "type": "Feature", "properties": { "gid": 91, "entidad": 0.0, "objeto": "Puerto", "fna": "Puerto Louis Dreyfus Co. Argentina S.A.", "gna": "Puerto", "nam": "Louis Dreyfus Co. Argentina S.A.", "fuc": 2.0, "fdc": "IGN/Min. de Transporte", "sag": "IGN" }, "geometry": { "type": "Point", "coordinates": [ -60.51457156, -33.12245479 ] } },
+{ "type": "Feature", "properties": { "gid": 57, "entidad": 0.0, "objeto": "Puerto", "fna": "Puerto Quequén", "gna": "Puerto", "nam": "Quequén", "fuc": 2.0, "fdc": "IGN/Min. de Transporte", "sag": "IGN" }, "geometry": { "type": "Point", "coordinates": [ -58.70263559, -38.57659796 ] } }
+]
+}

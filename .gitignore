@@ -1,0 +1,98 @@
+# ==============================
+# Datos OSRM / OSM
+# ==============================
+osrm/
+*.osm.pbf
+*.osrm
+*.osrm.*
+
+# ==============================
+# Python
+# ==============================
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+.eggs/
+build/
+dist/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# uv (se versiona uv.lock y pyproject.toml, pero no el cache)
+.uv/
+
+# ==============================
+# Jupyter Notebooks
+# ==============================
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# ==============================
+# Excel / Office temporales/no temporales/generados
+# ==============================
+~$*.xlsx
+~$*.xls
+~$*.docx
+*.xlsx
+*.xls
+*.docx
+*.doc
+*.txt
+*.pdf
+*.jpg
+*.png
+*.gif
+
+# ==============================
+# macOS
+# ==============================
+.DS_Store
+**/.DS_Store
+
+# ==============================
+# Salidas de render (Quarto / HTML generado)
+# ==============================
+README_files/
+README.html
+
+# ==============================
+# IDE / Editor
+# ==============================
+.vscode/
+.idea/
+.cursor/
+osrm-local-server.code-workspace
+*code-workspace
+**/graphify*/
+
+
+# ==============================
+# Variables de entorno
+# ==============================
+.env*
+*.env
+
+
+# ==============================
+# Config / Inputs / Outputs
+# ==============================
+config/osrm_port.txt
+config/settings.yaml
+!config/settings.example.yaml
+inputs/*
+!inputs/.gitignore
+outputs/*
+!outputs/.gitignore
+notebooks/*
+!notebooks/.gitignore
+
+
+
+# ==============================
+# Old files
+# ==============================

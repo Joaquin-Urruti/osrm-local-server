@@ -1,0 +1,11 @@
+# Copy to settings.yaml and edit for your environment.
+# The OSRM port is updated automatically in osrm_port.txt when running init_server_osrm_docker.sh
+
+osrm:
+  host: localhost
+  port: 5000  # fallback when config/osrm_port.txt does not exist
+
+defaults:
+  origin_layer: inputs/test_origins.xlsx
+  origin_id_col: Campo
+  destinations_config: inputs/test_destinations.yaml

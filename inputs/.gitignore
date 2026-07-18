@@ -1,0 +1,9 @@
+# Ignorar todo por defecto (datos del usuario)
+*
+!.gitignore
+
+# Fixtures / ejemplos versionados
+!destinations.example.yaml
+!test_destinations.yaml
+!test_destinations.geojson
+!test_origins.xlsx
