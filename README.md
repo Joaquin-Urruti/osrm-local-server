@@ -301,5 +301,5 @@ osrm-local-server/
 
 ## 🤝 Contributing
 
-This project is maintained for internal use at Espartina. 
-For questions or issues, contact the development team.
+This project is maintained by Joaquín Urruti. 
+For questions or issues you can contact me on LinkedIn.
