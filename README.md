@@ -138,18 +138,26 @@ Open and execute [notebooks/example.ipynb](notebooks/example.ipynb) in Jupyter o
 
 ### Output format
 
-The CLI writes an Excel file with one row per origin–destination pair:
+The CLI writes an Excel file with one row per origin–destination pair, sorted by origin, destination type, and proximity rank.
 
 | Column | Description |
 |--------|-------------|
-| `<origin_id_col>` | Origin label (from the column configured in settings) |
-| `origen_id` | Origin identifier |
-| `origen_x` | Origin longitude |
-| `origen_y` | Origin latitude |
-| `destino_id` | Destination identifier (`{type}_{name}`) |
-| `destino_x` | Destination longitude |
-| `destino_y` | Destination latitude |
-| `distancia` | Road distance in kilometers |
+| `orig_id` | Origin identifier (from the column configured in settings) |
+| `orig_x` | Origin longitude (snapped to road network) |
+| `orig_y` | Origin latitude (snapped to road network) |
+| `dest_id` | Destination identifier (`{type}_{name}`) |
+| `dest_x` | Destination longitude (snapped to road network) |
+| `dest_y` | Destination latitude (snapped to road network) |
+| `dist_km` | Road distance in kilometers (integer) |
+| `type_dest` | Destination type label (prefix of `dest_id`, e.g. `port`, `mill`) |
+| `proximity` | Rank by distance within each `(orig_id, type_dest)` group; `1` = closest |
+
+**Proximity ranking:** for each origin and destination type, rows are ranked by `dist_km` ascending. Use `proximity` to keep only the *N* nearest destinations per origin and type—for example, `proximity <= 3` returns the three closest ports for each origin.
+
+```python
+# Top 2 closest destinations of each type, per origin
+nearest = results[results["proximity"] <= 2]
+```
 
 ## 🧩 How It Works
 

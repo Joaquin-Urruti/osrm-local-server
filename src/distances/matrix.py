@@ -1,3 +1,6 @@
+# Uncomment for development
+from pathlib import Path
+
 import pandas as pd
 
 from distances.inputs import (
@@ -10,6 +13,7 @@ from distances.osrm import get_driving_distance, snap_to_road
 from distances.settings import (
     DESTINATIONS_EXAMPLE_CONFIG,
     INPUTS_DIR,
+    PROJECT_ROOT,
     load_settings,
     resolve_project_path,
 )
@@ -27,9 +31,7 @@ def build_distance_matrix(
     osrm_host = settings["osrm"]["host"]
     osrm_port = settings["osrm"]["port"]
 
-    origin_layer = resolve_project_path(
-        origin_layer or defaults["origin_layer"]
-    )
+    origin_layer = resolve_project_path(origin_layer or defaults["origin_layer"])
     origin_id_col = origin_id_col or defaults["origin_id_col"]
     destinations_config = resolve_project_path(
         destinations_config or defaults["destinations_config"]
@@ -70,18 +72,16 @@ def build_distance_matrix(
     rows = []
     for k1, v1 in origin_coord_snapped.items():
         for k2, v2 in destination_coord_snapped.items():
-            distance = get_driving_distance(
-                v1, v2, host=osrm_host, port=osrm_port
-            )
+            distance = get_driving_distance(v1, v2, host=osrm_host, port=osrm_port)
             rows.append(
                 {
-                    "origen_id": k1,
-                    "origen_x": v1[1],
-                    "origen_y": v1[0],
-                    "destino_id": k2,
-                    "destino_x": v2[1],
-                    "destino_y": v2[0],
-                    "distancia": int(distance),
+                    "orig_id": k1,
+                    "orig_x": v1[1],
+                    "orig_y": v1[0],
+                    "dest_id": k2,
+                    "dest_x": v2[1],
+                    "dest_y": v2[0],
+                    "dist_km": int(distance),
                 }
             )
 
@@ -90,21 +90,31 @@ def build_distance_matrix(
     results = pd.merge(
         df,
         origin_gdf[["id", origin_label_col]],
-        left_on="origen_id",
+        left_on="orig_id",
         right_on="id",
         how="left",
     ).drop(columns="id")
     results = results[
         [
-            origin_label_col,
-            "origen_id",
-            "origen_x",
-            "origen_y",
-            "destino_id",
-            "destino_x",
-            "destino_y",
-            "distancia",
+            # origin_label_col,
+            "orig_id",
+            "orig_x",
+            "orig_y",
+            "dest_id",
+            "dest_x",
+            "dest_y",
+            "dist_km",
         ]
     ]
+
+    results["type_dest"] = results["dest_id"].str.split("_", n=1).str[0]
+
+    results["proximity"] = (
+        results.groupby(["orig_id", "type_dest"])["dist_km"]
+        .rank(method="first", ascending=True)
+        .astype(int)
+    )
+
+    results = results.sort_values(by=["orig_id", "type_dest", "proximity"])
 
     return results
